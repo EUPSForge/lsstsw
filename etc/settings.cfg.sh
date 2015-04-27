@@ -3,7 +3,7 @@
 #
 
 # top-level products
-PRODUCTS='lsst_sims lsst_distrib qserv_distrib git anaconda webserv'
+PRODUCTS='eupsforge_distrib'
 
 # set it to nonempty to prevent versiondb from being pushed upstream
 # unless you're the automated LSST software account
@@ -20,7 +20,8 @@ fi
 LSSTSW=$(cd "$(dirname "$BASH_SOURCE")/.."; pwd)
 
 # the location of source repositories
-REPOSFILE=${LSSTSW}/etc/repos.yaml
+export REPOSITORY_PATTERN="https://github.com/EUPSForge/%(product)s"
+# REPOSFILE=${LSSTSW}/etc/repos.yaml
 
 # location of the build directory
 LSSTSW_BUILD_DIR=${LSSTSW_BUILD_DIR:-${LSSTSW}/build}
