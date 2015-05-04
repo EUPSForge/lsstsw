@@ -42,8 +42,9 @@ fi
 PRODUCTS="$@"
 
 if [[ -z $BUILD ]]; then
-    if [[ ! -z $DISTRIBTAG ]]; then
-        # Default the build ID to distserver tag value
+    if [[ ! -z $DISTRIBTAG && "$DISTRIBTAG" != current ]]; then
+        # Default the build ID to distserver tag value, unless the
+        # it's equal to "current"
         BUILD="$DISTRIBTAG"
         echo "[publish] Build ID defaulting to distserver tag, $BUILD."
     else
