@@ -21,7 +21,7 @@ LSSTSW=$(cd "$(dirname "$BASH_SOURCE")/.."; pwd)
 
 # the location of source repositories
 export REPOSITORY_PATTERN="https://github.com/EUPSForge/%(product)s"
-# REPOSFILE=${LSSTSW}/etc/repos.yaml
+REPOSFILE=${LSSTSW}/etc/repos.yaml
 
 # location of the build directory
 LSSTSW_BUILD_DIR=${LSSTSW_BUILD_DIR:-${LSSTSW}/build}
