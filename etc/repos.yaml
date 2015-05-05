@@ -1,3 +1,4 @@
 ---
 swig: https://github.com/lsst/swig.git
 lsd: https://github.com/mjuric/lsd.git
+anaconda: https://github.com/lsst/anaconda.git
