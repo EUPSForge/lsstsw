@@ -3,7 +3,8 @@
 *~
 anaconda/
 build/
-distserver
+distserver/production/*
+!distserver/production/bootstrap.sh
 eups/
 lfs/
 public_html/
@@ -12,3 +13,4 @@ stack/
 versiondb/
 lsst_build/
 var/
+DEADJOE
