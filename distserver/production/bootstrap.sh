@@ -104,6 +104,52 @@ if [[ "$cont_flag" = false ]]; then
 	fi
 fi
 
+##########  Discuss the state of Git.
+
+if true; then
+	if hash git 2>/dev/null; then
+		GITVERNUM=$(git --version | cut -d\  -f 3)
+		GITVER=$(printf "%02d-%02d-%02d\n" $(echo "$GITVERNUM" | cut -d. -f1-3 | tr . ' '))
+	fi
+
+	if [[ $GITVER < "01-08-04" ]]; then
+		if [[ "$batch_flag" = true ]]; then
+			WITH_GIT=1
+		else
+			cat <<-EOF
+			You need at least git 1.8.4 for use with EUPSForge. We can install one
+			for you.
+
+			The git package installed by this installer will be managed by
+			EUPSForge's EUPS package manager, and will not replace or modify your
+			system git (if any).
+
+			EOF
+
+			while true; do
+				read -p "Would you like us to install git? " yn
+				case $yn in
+					[Yy]* )
+						echo "Will install git."
+						WITH_GIT=1
+						break
+						;;
+					[Nn]* )
+						echo "Okay install git and rerun the script."
+						exit;
+						break;
+						;;
+					* ) echo "Please answer yes or no.";;
+				esac
+			done
+		fi
+	else
+		echo "Detected $(git --version). OK."
+	fi
+	echo
+fi
+
+
 ##########	Test/warn about Python versions, offer to get anaconda if too old
 
 if true; then
@@ -244,6 +290,13 @@ set -e
 ##########	Download optional components (python)
 
 if true; then
+	if [[ $WITH_GIT = 1 ]]; then
+		echo "Installing git ... "
+		$cmd eups distrib install --repository="$EUPS_PKGROOT" git
+		$cmd setup git
+		CMD_SETUP_GIT='setup git'
+	fi
+
 	if [[ $WITH_ANACONDA = 1 ]]; then
 		echo "Installing Anaconda Python Distribution ... "
 		$cmd eups distrib install --repository="$EUPS_PKGROOT" anaconda
@@ -279,6 +332,7 @@ function generate_loader_bash() {
 
 		# Setup optional packages
 		$CMD_SETUP_ANACONDA
+		$CMD_SETUP_GIT
 
 		# Setup minimal EUPSForge environment
 		setup eupsforge
@@ -307,6 +361,7 @@ function generate_loader_csh() {
 
 		   # Setup optional packages
 		   $CMD_SETUP_ANACONDA
+		   $CMD_SETUP_GIT
 
 		   # Setup minimal EUPSForge environment
 		   setup eupsforge
@@ -332,6 +387,7 @@ function generate_loader_ksh() {
 
 		# Setup optional packages
 		$CMD_SETUP_ANACONDA
+		$CMD_SETUP_GIT
 
 		# Setup minimal EUPSForge environment
 		setup eupsforge
@@ -356,6 +412,7 @@ function generate_loader_zsh() {
 
 		# Setup optional packages
 		$CMD_SETUP_ANACONDA
+		$CMD_SETUP_GIT
 
 		# Setup minimal EUPSForge environment
 		setup eupsforge
