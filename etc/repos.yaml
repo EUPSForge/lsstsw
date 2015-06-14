@@ -2,3 +2,5 @@
 swig: https://github.com/lsst/swig.git
 lsd: https://github.com/mjuric/lsd.git
 anaconda: https://github.com/lsst/anaconda.git
+firefly: https://github.com/lsst/firefly.git
+ipython_eups: https://github.com/mjuric/ipython_eups.git
